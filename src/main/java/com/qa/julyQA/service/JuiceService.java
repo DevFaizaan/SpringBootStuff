@@ -1,9 +1,11 @@
-package service;
+package com.qa.julyQA.service;
 
 import java.util.List;
-import domain.Juice;
+
+import com.qa.julyQA.domain.Juice;
 
 public interface JuiceService {
+	
 	Juice makeJuice(Juice juice);
 
 	List<Juice> getAllJuices();

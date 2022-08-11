@@ -1,4 +1,4 @@
-package controller;
+package com.qa.julyQA.controller;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import service.JuiceService;
-import domain.Juice;
+import com.qa.julyQA.domain.Juice;
+import com.qa.julyQA.service.JuiceService;
 
 @RestController
 public class Juicecontroller {
 	
-	private JuiceService service;
+	public JuiceService service;
 
 	@Autowired
 	public Juicecontroller(JuiceService service) {
@@ -36,12 +36,18 @@ public class Juicecontroller {
 		return "Hello, world!";
 	}
 
-	@PostMapping("/createJuice")
-	public Juice makeBikky(@RequestBody Juice juice) {
-		System.out.println("Body: " + juice);
-		return this.service.makeJuice(juice);
-	}
+//	@PostMapping("/createJuices")
+//	public Juice createJuice(@RequestBody Juice juice) {
+//		System.out.println("Body: " + juice);
+//		return this.service.createJuice(juice);
+//	}
 
+	   @PostMapping("/createJuice")
+	    public ResponseEntity<Juice> makeJuice(@RequestBody Juice juice) {
+	        System.out.println("Body: " + juice);
+	        return new ResponseEntity<Juice>(this.service.makeJuice(juice), HttpStatus.CREATED);
+	    }
+	   
 	@RequestMapping(method = RequestMethod.GET, path = "/getAll")
 	public List<Juice> getAllJuices() {
 		return this.service.getAllJuices();
@@ -50,7 +56,7 @@ public class Juicecontroller {
 	@GetMapping("/get/{id}")
 	public ResponseEntity<Juice> getById(@PathVariable int id) {
 		System.out.println("ID: " + id);
-		return new ResponseEntity<Juice>(this.service.getById(id), HttpStatus.I_AM_A_TEAPOT);
+		return new ResponseEntity<Juice>(this.service.getById(id), HttpStatus.OK);
 	}
 
 	@PatchMapping("/update/{id}")

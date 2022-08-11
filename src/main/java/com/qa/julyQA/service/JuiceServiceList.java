@@ -1,11 +1,11 @@
-package service;
+package com.qa.julyQA.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import domain.Juice;
+import com.qa.julyQA.domain.Juice;
 
 @Service
 public class JuiceServiceList implements JuiceService {
@@ -31,6 +31,7 @@ public class JuiceServiceList implements JuiceService {
 
 	@Override
 	public Juice getById(int id) {
+		//Juice found = this.repo.find
 		return this.juices.get(id);
 	}
 

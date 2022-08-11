@@ -1,12 +1,13 @@
-package service;
+package com.qa.julyQA.service;
 
 import java.util.List;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import domain.Juice;
-import repos.JuiceRepo;
+import com.qa.julyQA.domain.Juice;
+import com.qa.julyQA.exception.JuiceException;
+import com.qa.julyQA.repos.JuiceRepo;
 
 @Service
 @Primary
@@ -30,12 +31,17 @@ public class JuiceServiceDB implements JuiceService {
 
 	@Override
 	public Juice getById(int id) {
-		return this.repo.findById(id).get();
+		Juice found = this.repo.findById(id).orElseThrow(JuiceException::new);
+		return found;
+		
+		//return this.repo.findById(id).get();
 	}
 
 	@Override
 	public Juice updateJuice(int id, String name, Integer amount, Double cost) {
-		Juice toUpdate = this.getById(id);
+		//Juice toUpdate = this.getById(id);
+		Juice toUpdate = this.repo.findById(id).orElseThrow(JuiceException::new);
+		
 
 		if (name != null && !name.isBlank())
 			toUpdate.setName(name);
@@ -49,7 +55,8 @@ public class JuiceServiceDB implements JuiceService {
 
 	@Override
 	public void delete(int id) {
-		this.repo.deleteById(id);
+		Juice found = this.repo.findById(id).orElseThrow(JuiceException::new);
+		this.repo.delete(found);
 
 	}
 }
